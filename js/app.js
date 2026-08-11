@@ -115,7 +115,7 @@
     const disp = disponible(mes);
     $('valor-gastos').textContent = formatMoney(gastado);
     $('valor-disponible').textContent = formatMoney(disp);
-    $('disponible-card').classList.toggle('negative', disp < 0);
+    $('valor-disponible').classList.toggle('negative', disp < 0);
 
     const resumen = resumenPorCategoria(mes);
     const cont = $('resumen-lista');

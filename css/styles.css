@@ -243,10 +243,10 @@ button.stat-card { cursor: pointer; }
 .stat-value { font-size: 18px; font-weight: 700; }
 .stat-value.negative { color: var(--danger); }
 
-.disponible-card {
+.gastos-card {
   margin: 4px 20px 8px;
-  background: linear-gradient(135deg, rgba(46, 204, 113, 0.16), rgba(46, 204, 113, 0.04));
-  border: 1px solid rgba(46, 204, 113, 0.35);
+  background: linear-gradient(135deg, rgba(231, 76, 60, 0.16), rgba(231, 76, 60, 0.04));
+  border: 1px solid rgba(231, 76, 60, 0.35);
   border-radius: var(--radius);
   padding: 18px;
   display: flex;
@@ -254,18 +254,11 @@ button.stat-card { cursor: pointer; }
   gap: 4px;
 }
 
-.disponible-card.negative {
-  background: linear-gradient(135deg, rgba(231, 76, 60, 0.18), rgba(231, 76, 60, 0.05));
-  border-color: rgba(231, 76, 60, 0.4);
-}
-
 .stat-value-large {
   font-size: 32px;
   font-weight: 800;
-  color: var(--accent);
+  color: var(--danger);
 }
-
-.disponible-card.negative .stat-value-large { color: var(--danger); }
 
 /* Resumen */
 .resumen-section { padding: 12px 20px; }
