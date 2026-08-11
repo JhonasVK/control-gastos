@@ -51,15 +51,14 @@
   function init() {
     bindEvents();
     if (!state) {
-      show('view-onboarding');
-    } else {
-      renderMain();
-      show('view-main');
+      state = crearEstadoInicial(0);
+      setState(state);
     }
+    renderMain();
+    show('view-main');
   }
 
   function bindEvents() {
-    $('btn-comenzar').addEventListener('click', onComenzar);
     $('card-saldo-inicial').addEventListener('click', onEditarSaldoInicial);
 
     $('btn-agregar-gasto').addEventListener('click', () => abrirFormGasto(null));
@@ -83,16 +82,6 @@
     $('btn-cerrar-mes').addEventListener('click', abrirCerrarMes);
     $('btn-confirmar-nuevo-mes').addEventListener('click', onConfirmarNuevoMes);
     $('btn-cancelar-nuevo-mes').addEventListener('click', () => show('view-main'));
-  }
-
-  // ---------- Onboarding ----------
-  function onComenzar() {
-    const val = parseFloat($('input-salario-inicial').value);
-    if (isNaN(val) || val < 0) return;
-    state = crearEstadoInicial(val);
-    setState(state);
-    renderMain();
-    show('view-main');
   }
 
   function onEditarSaldoInicial() {
