@@ -60,6 +60,7 @@
 
   function bindEvents() {
     $('card-saldo-inicial').addEventListener('click', onEditarSaldoInicial);
+    $('btn-eliminar-saldo-inicial').addEventListener('click', onEliminarSaldoInicial);
 
     $('btn-agregar-gasto').addEventListener('click', () => abrirFormGasto(null));
     $('btn-cerrar-gasto').addEventListener('click', () => { renderMain(); show('view-main'); });
@@ -91,6 +92,15 @@
     const val = parseFloat(nuevo);
     if (isNaN(val) || val < 0) return;
     mes.salarioInicial = val;
+    setState(state);
+    renderMain();
+  }
+
+  function onEliminarSaldoInicial() {
+    const mes = mesActivo();
+    if (mes.salarioInicial === 0) return;
+    if (!confirm('¿Eliminar el saldo inicial? Quedará en $0.')) return;
+    mes.salarioInicial = 0;
     setState(state);
     renderMain();
   }

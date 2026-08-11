@@ -22,11 +22,14 @@
     </header>
 
     <div class="cards-row">
-      <button type="button" class="stat-card" id="card-saldo-inicial">
-        <span class="stat-icon">💰</span>
-        <span class="stat-label">Saldo inicial</span>
-        <span class="stat-value" id="valor-saldo-inicial">$0</span>
-      </button>
+      <div class="stat-card stat-card-saldo">
+        <button type="button" class="stat-card-main" id="card-saldo-inicial">
+          <span class="stat-icon">💰</span>
+          <span class="stat-label">Saldo inicial</span>
+          <span class="stat-value" id="valor-saldo-inicial">$0</span>
+        </button>
+        <button type="button" class="btn-icon-danger stat-card-delete" id="btn-eliminar-saldo-inicial" title="Eliminar saldo inicial">🗑️</button>
+      </div>
       <div class="stat-card">
         <span class="stat-icon">💸</span>
         <span class="stat-label">Gastos</span>
