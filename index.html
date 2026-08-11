@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Control de Gastos</title>
+<meta name="description" content="Controlá tus gastos personales de forma simple y rápida.">
+<meta name="theme-color" content="#0f1115">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon.svg">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- Onboarding -->
+  <section id="view-onboarding" class="screen">
+    <div class="onboarding-card">
+      <div class="onboarding-icon">💰</div>
+      <h1>Control de Gastos</h1>
+      <p class="subtitle">¿Cuánto dinero tenés disponible este mes?</p>
+      <input id="input-salario-inicial" class="input-monto-grande" type="number" min="0" step="1" inputmode="decimal" placeholder="0">
+      <button id="btn-comenzar" class="btn-primary btn-large">Comenzar</button>
+    </div>
+  </section>
+
+  <!-- Main -->
+  <section id="view-main" class="screen hidden">
+    <header class="app-header">
+      <div class="mes-label" id="mes-label">Mes</div>
+      <button id="btn-cerrar-mes" class="btn-ghost">Cerrar mes</button>
+    </header>
+
+    <div class="cards-row">
+      <button type="button" class="stat-card" id="card-saldo-inicial">
+        <span class="stat-icon">💰</span>
+        <span class="stat-label">Saldo inicial</span>
+        <span class="stat-value" id="valor-saldo-inicial">$0</span>
+      </button>
+      <div class="stat-card">
+        <span class="stat-icon">💸</span>
+        <span class="stat-label">Gastos</span>
+        <span class="stat-value negative" id="valor-gastos">$0</span>
+      </div>
+    </div>
+
+    <div class="disponible-card" id="disponible-card">
+      <span class="stat-icon">🟢</span>
+      <span class="stat-label">Disponible</span>
+      <span class="stat-value-large" id="valor-disponible">$0</span>
+    </div>
+
+    <div class="resumen-section">
+      <div class="section-title">📊 Resumen por categoría</div>
+      <div id="resumen-lista" class="resumen-lista"></div>
+      <p id="resumen-vacio" class="empty-hint hidden">Todavía no registraste gastos este mes.</p>
+    </div>
+
+    <div class="scroll-spacer"></div>
+
+    <nav class="bottom-nav">
+      <button id="btn-historial" class="nav-btn">🕘<span>Historial</span></button>
+      <button id="btn-categorias" class="nav-btn">🏷️<span>Categorías</span></button>
+      <button id="btn-exportar" class="nav-btn">⬇️<span>Exportar</span></button>
+    </nav>
+
+    <button id="btn-agregar-gasto" class="fab">+ Agregar gasto</button>
+  </section>
+
+  <!-- Add/Edit expense -->
+  <section id="view-gasto" class="screen overlay hidden">
+    <header class="overlay-header">
+      <button type="button" id="btn-cerrar-gasto" class="btn-icon">✕</button>
+      <h2 id="titulo-gasto">Agregar gasto</h2>
+      <span class="header-spacer"></span>
+    </header>
+    <form id="form-gasto" class="form-gasto">
+      <label class="campo">
+        <span>Monto</span>
+        <input id="input-monto" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="0" required>
+      </label>
+      <label class="campo">
+        <span>Concepto</span>
+        <input id="input-concepto" type="text" placeholder="Ej: Supermercado semana" maxlength="60" required>
+      </label>
+      <label class="campo">
+        <span>Fecha</span>
+        <input id="input-fecha" type="date" required>
+      </label>
+      <div class="campo">
+        <span>Categoría</span>
+        <div id="chips-categoria" class="chips"></div>
+      </div>
+      <button type="submit" class="btn-primary btn-large">Guardar</button>
+      <button type="button" id="btn-eliminar-gasto" class="btn-danger btn-large hidden">Eliminar gasto</button>
+    </form>
+  </section>
+
+  <!-- History -->
+  <section id="view-historial" class="screen overlay hidden">
+    <header class="overlay-header">
+      <button type="button" id="btn-cerrar-historial" class="btn-icon">✕</button>
+      <h2>Historial</h2>
+      <span class="header-spacer"></span>
+    </header>
+    <select id="select-mes-historial" class="select-mes"></select>
+    <div id="resumen-mes-cerrado" class="mes-cerrado-resumen hidden"></div>
+    <div id="lista-historial" class="lista-historial"></div>
+    <p id="historial-vacio" class="empty-hint hidden">No hay gastos registrados en este mes.</p>
+  </section>
+
+  <!-- Categories -->
+  <section id="view-categorias" class="screen overlay hidden">
+    <header class="overlay-header">
+      <button type="button" id="btn-cerrar-categorias" class="btn-icon">✕</button>
+      <h2>Gestionar categorías</h2>
+      <span class="header-spacer"></span>
+    </header>
+    <div id="lista-categorias" class="lista-categorias"></div>
+    <form id="form-nueva-categoria" class="form-nueva-categoria">
+      <input id="input-nueva-categoria" type="text" placeholder="Nueva categoría" maxlength="30">
+      <button type="submit" class="btn-primary">Agregar</button>
+    </form>
+  </section>
+
+  <!-- Close month -->
+  <section id="view-cerrar-mes" class="screen overlay hidden">
+    <div class="onboarding-card">
+      <div class="onboarding-icon">📅</div>
+      <h1 id="titulo-nuevo-mes">Nuevo mes</h1>
+      <p class="subtitle" id="subtitulo-nuevo-mes">¿Cuánto dinero tenés disponible este mes?</p>
+      <input id="input-salario-nuevo-mes" class="input-monto-grande" type="number" min="0" step="1" inputmode="decimal" placeholder="0">
+      <button id="btn-confirmar-nuevo-mes" class="btn-primary btn-large">Comenzar mes</button>
+      <button type="button" id="btn-cancelar-nuevo-mes" class="btn-text">Cancelar</button>
+    </div>
+  </section>
+
+</div>
+
+<script src="js/storage.js"></script>
+<script src="js/state.js"></script>
+<script src="js/export.js"></script>
+<script src="js/app.js"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch(() => {});
+    });
+  }
+</script>
+</body>
+</html>
